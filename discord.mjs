@@ -21,7 +21,7 @@ export async function notifyRecord(mapName, newPlayerName, newPlayerTime, newPla
     .setDescription(`Map: **${mapName}**`)
     .addFields(
       { name: 'Player', value: `⬆️ ${newPlayerName}`, inline: true },
-      { name: 'Time', value:`${newPlayerTime} (${timeDifference})`, inline: true },
+      { name: 'Time', value: `${newPlayerTime} (${timeDifference})`, inline: true },
       { name: 'World Rank', value: `#${newPlayerRank}`, inline: true },
       { name: 'Player', value: `⬇️ ${oldPlayerName}`, inline: true },
       { name: 'Time', value: oldPlayerTime, inline: true },
