@@ -1,6 +1,5 @@
 import {
-  getUbiToken,
-  getNadeoToken,
+  getDedicatedServerToken,
   getOAuthToken,
   enumerateCountryZones,
   getLatestCampaign,
@@ -9,19 +8,16 @@ import {
 
 import { delay } from './timeUtils.mjs';
 
-//Insert exact country name
 const country = '';
 
 export async function getRecords() {
   try {
     //Tokens
-    const ubiToken = await getUbiToken();
-    const nadeoLiveToken = await getNadeoToken(ubiToken, 'NadeoLiveServices');
-    const nadeoCoreToken = await getNadeoToken(ubiToken, 'NadeoServices');
+    const nadeoLiveToken = await getDedicatedServerToken();
     const oauthToken = await getOAuthToken();
 
     //Zones and campaign
-    const zones = await enumerateCountryZones(country, nadeoCoreToken);
+    const zones = await enumerateCountryZones(country, nadeoLiveToken);
     const latestCampaign = await getLatestCampaign(nadeoLiveToken);
 
     if (latestCampaign === null) {
@@ -42,10 +38,10 @@ export async function getRecords() {
       await delay(500); //2 requests per second
     }
 
-    //console.log('Player results:', results); //In case you want to see the results
+    console.log(results);
     return results;
 
   } catch (error) {
-    console.error('An error occurred:', error);
+    console.error('An error occurred while getting records:', error);
   }
 }

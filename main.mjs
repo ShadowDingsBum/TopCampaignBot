@@ -5,7 +5,7 @@ import { formatTime, formatTimeDifference } from './timeUtils.mjs';
 let previousResults = [];
 
 function checkRecords(currentResults) {
-  // Map for quick lookup
+  //Map for quick lookup
   const previousMap = new Map(previousResults.map(result => [result.mapName, result]));
 
   currentResults.forEach(current => {
@@ -21,7 +21,7 @@ function checkRecords(currentResults) {
         const oldPlayerName = previous.playerName;
         const oldPlayerTime = formatTime(previous.time);
 
-        // Notify about the new record
+        //Notify about the new record
         notifyRecord(mapName, newPlayerName, newPlayerTime, newPlayerRank, timeDifference, oldPlayerName, oldPlayerTime);
       }
     }

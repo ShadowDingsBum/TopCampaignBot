@@ -16,7 +16,6 @@ export async function notifyRecord(mapName, newPlayerName, newPlayerTime, newPla
     return;
   }
 
-  //Fix title according to your preferences (Country etc..)
   const embed = new EmbedBuilder()
     .setTitle('New Italian Campaign Record!')
     .setDescription(`Map: **${mapName}**`)
