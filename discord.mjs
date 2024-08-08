@@ -16,22 +16,35 @@ export async function notifyRecord(mapName, newPlayerName, newPlayerTime, newPla
     return;
   }
 
-  const embed = new EmbedBuilder()
-    .setTitle('New Italian Campaign Record!')
-    .setDescription(`Map: **${mapName}**`)
-    .addFields(
-      { name: 'Player', value: `⬆️ ${newPlayerName}`, inline: true },
-      { name: 'Time', value: `${newPlayerTime} (${timeDifference})`, inline: true },
+  let embedDescription = '';
+  let fields = [];
+
+  if (newPlayerName === oldPlayerName) {
+    embedDescription = `**${newPlayerName}** improved their own time on **${mapName}**!`;
+    fields = [
+      { name: 'New PB', value: `${newPlayerTime} (${timeDifference})`, inline: true },
+      { name: 'Old PB', value: oldPlayerTime, inline: true },	
+      { name: 'World Rank', value: `#${newPlayerRank}`, inline: true }
+    ];
+  } else {
+    embedDescription = `**${newPlayerName}** beat **${oldPlayerName}**'s time on **${mapName}**!`;
+    fields = [
+      { name: `${newPlayerName}'s PB`, value: `${newPlayerTime}`, inline: true },
+      { name: 'Time Gap', value: `${timeDifference}`, inline: true },
       { name: 'World Rank', value: `#${newPlayerRank}`, inline: true },
-      { name: 'Player', value: `⬇️ ${oldPlayerName}`, inline: true },
-      { name: 'Time', value: oldPlayerTime, inline: true },
-      { name: '\u200B', value: '\u200B', inline: true } //Placeholder for alignment
-    )
-    .setColor('#0c0c8b')
-    .setTimestamp();
+      { name: `${oldPlayerName}'s PB`, value: oldPlayerTime, inline: true }
+    ];
+  }
+
+  const embed = new EmbedBuilder()
+    .setTitle('New Italian Campaign Record! :flag_it:')
+    .setDescription(embedDescription)
+    .addFields(fields)
+    .setColor('#0c0c8b');
 
   try {
     await channel.send({ embeds: [embed] });
+    console.log('Message sent successfully!');
   } catch (error) {
     console.error('Failed to send new record message to Discord:', error);
   }
